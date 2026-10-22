@@ -17,10 +17,13 @@ q6_env/
 
 ## 三条命令（题目要求：在终端里敲，不点界面按钮）
 
-```bat
-build.bat          :: 编译（= cl /Zi /EHsc /utf-8 /Fe:hello.exe hello.c）
-hello.exe 7        :: 运行，7! = 5040
-python hello.py 20 :: Python 那条链，1+...+20 = 210
+> ⚠️ VSCode 集成终端默认是 **PowerShell**，当前目录下的命令要加 `.\` 前缀，
+> 否则报 `CommandNotFound`（它出于安全不把当前目录当 PATH）。cmd 里不用加。
+
+```powershell
+.\build.bat          # 编译（= cl /Zi /EHsc /utf-8 /Fe:hello.exe hello.c）
+.\hello.exe 7        # 运行，7! = 5040
+python hello.py 20   # Python 那条链，1+...+20 = 210（python 在系统 PATH 里，不用加 .\）
 ```
 
 调试：VSCode 里打开本文件夹 → 在 `result *= i;` 那行左侧点出红点 → F5 → F10 单步 → 看左侧「变量」面板。
