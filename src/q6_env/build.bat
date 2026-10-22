@@ -34,5 +34,5 @@ if errorlevel 1 (
     echo [build.bat] compile failed
     exit /b 1
 )
-echo [build.bat] OK -> hello.exe
+echo [build.bat] OK. hello.exe ready.
 endlocal
