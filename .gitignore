@@ -20,6 +20,9 @@ dist/
 *.exe
 *.dll
 *.so
+# MSVC 调试符号与增量链接文件，单个能有好几 MB
+*.pdb
+*.ilk
 
 # 第 3 题：llama.cpp 源码与大体积模型，绝对不能进仓库
 llama.cpp/
