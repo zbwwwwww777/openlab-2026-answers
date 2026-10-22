@@ -39,6 +39,9 @@ target/
 *.elf
 rCore-Tutorial*/
 
+# 导出 PDF 的中间产物（最终 PDF 在 dist/，不进仓库）
+答卷.html
+
 # 系统垃圾
 .DS_Store
 Thumbs.db
