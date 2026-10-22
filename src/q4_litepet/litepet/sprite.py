@@ -47,8 +47,8 @@ class CatSprite:
     # ------------------------------------------------------------ 主绘制
 
     def draw(self, p: QPainter, *, walk_phase: float = 0.0, blink: float = 0.0,
-             sleepy: bool = False, facing_right: bool = True,
-             bubble: str = "", mood: str = "") -> None:
+             sleepy: bool = False, facing_right: bool = True) -> None:
+        """只画猫。气泡由 draw_bubble 单独画在窗口顶部预留区，两者不重叠。"""
         p.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
         line = QPen(QColor(self.theme["line"]))
@@ -67,9 +67,6 @@ class CatSprite:
 
         if sleepy:
             self._draw_zzz(p)
-
-        if bubble:
-            self._draw_bubble(p, bubble, mood)
 
     # ------------------------------------------------------------ 各部件
 
@@ -176,7 +173,13 @@ class CatSprite:
 
     # ------------------------------------------------------------ 对话气泡
 
-    def _draw_bubble(self, p: QPainter, text: str, mood: str) -> None:
+    def draw_bubble(self, p: QPainter, text: str, mood: str,
+                    area_w: int) -> None:
+        """在窗口顶部预留区画对话气泡。
+
+        气泡与猫分层：窗口顶部留出一条独立区域给气泡，猫画在下方，
+        两者互不遮挡。area_w 是窗口总宽（气泡右对齐到窗口右缘）。
+        """
         font = QFont()
         font.setPointSize(9)
         p.setFont(font)
@@ -192,9 +195,8 @@ class CatSprite:
             width = max(width, small_fm.horizontalAdvance("心情：" + mood) + pad * 2)
         height = line_height * len(lines) + pad * 2 + (14 if mood else 0)
 
-        # 气泡右对齐到窗口右缘（而不是从右缘向右画，否则整段画出窗口外）
-        x = self.W - 4.0 - width
-        x = max(4.0, x)
+        # 右对齐到窗口右缘，且不超出左缘
+        x = max(4.0, area_w - 4.0 - width)
         y = 2.0
         rect = QRectF(x, y, width, height)
 
@@ -202,11 +204,11 @@ class CatSprite:
         p.setPen(QPen(QColor(self.theme["line"])))
         p.setBrush(QBrush(QColor(255, 255, 255, 240)))
         p.drawRoundedRect(rect, 10, 10)
-        # 气泡小尾巴
+        # 气泡小尾巴，指向右下方的猫
         p.drawPolygon(QPolygonF([
-            QPointF(x + 10, y + height),
-            QPointF(x + 18, y + height),
-            QPointF(x + 8, y + height + 8),
+            QPointF(x + width - 26, y + height),
+            QPointF(x + width - 10, y + height),
+            QPointF(x + width - 30, y + height + 8),
         ]))
 
         p.setPen(QColor(self.theme["line"]))

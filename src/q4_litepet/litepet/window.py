@@ -29,7 +29,8 @@ from .sprite import CatSprite, THEME_LABELS, theme_names
 LOG = logging.getLogger("litepet.window")
 
 WIN_W = 200
-WIN_H = 150
+WIN_H = 170        # 顶部 50px 是气泡预留区，下方 120px 画猫
+CAT_TOP = 50       # 猫的画布在窗口内的纵向偏移（气泡区的下方）
 
 TICK_MS = 40          # 动画帧间隔
 AUTOSAVE_MS = 30_000  # 自动存档间隔
@@ -186,15 +187,20 @@ class PetWindow(QWidget):
         now = datetime.now()
         bubble = self.bubble_text if (self.bubble_until and now < self.bubble_until) else ""
 
+        # 猫画在气泡区下方：整体下移 CAT_TOP，气泡单独画在顶部预留区
+        p.save()
+        p.translate(0, CAT_TOP)
         self.sprite.draw(
             p,
             walk_phase=self.walk_phase,
             blink=self._blink_progress,
             sleepy=self.brain.is_sleepy() and not self.sitting,
             facing_right=self.facing_right,
-            bubble=bubble,
-            mood=self.brain.mood if bubble else "",
         )
+        p.restore()
+
+        if bubble:
+            self.sprite.draw_bubble(p, bubble, self.brain.mood, WIN_W)
         p.end()
 
     # ------------------------------------------------------------ 主循环
