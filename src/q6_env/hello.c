@@ -4,11 +4,18 @@
  * 目的不是"打印 Hello World"，而是把这条链路走通：
  *     写代码 -> 命令行编译 -> 打断点单步调试 -> 命令行运行
  *
- * 编译（必须在 x64 Native Tools Command Prompt / 或已跑过 vcvars64 的会话里）：
- *     cl /Zi /EHsc /Fe:hello.exe hello.c
+ * 编译（普通终端即可，不需要 x64 Native Tools Command Prompt）：
+ *     build.bat
+ * 它内部做三件事：跑 vcvars64.bat 把 cl.exe 拉进 PATH、补上本机 vcvars
+ * 漏掉的 Windows SDK 的 INCLUDE/LIB、然后执行
+ *     cl /Zi /EHsc /utf-8 /Fe:hello.exe hello.c
+ * （/utf-8 是必需的：本文件有中文注释，不加会报 warning C4819。）
  *
- * 或者在 VSCode 里 Ctrl+Shift+B（调用 .vscode/tasks.json）
- * 然后 F5 启动调试，在下面标记的断点处停住看变量。
+ * 命令行运行（题目要求：敲命令，不是点界面按钮）：
+ *     hello.exe
+ *     hello.exe 7
+ *
+ * VSCode 里 Ctrl+Shift+B 编译、F5 调试，断点打在下面标记处看变量。
  */
 
 #include <stdio.h>

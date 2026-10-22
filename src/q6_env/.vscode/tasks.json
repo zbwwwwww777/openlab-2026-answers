@@ -2,15 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "cl: 编译 hello.c（带调试信息）",
+            "label": "build: 编译 hello.c（MSVC，带调试信息）",
             "type": "shell",
-            "command": "cl",
-            "args": [
-                "/Zi",
-                "/EHsc",
-                "/Fe:hello.exe",
-                "hello.c"
-            ],
+            "command": "${workspaceFolder}\\build.bat",
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -21,15 +15,28 @@
             "problemMatcher": [
                 "$msCompile"
             ],
-            "detail": "用 MSVC 的 cl.exe 编译。必须从 x64 Native Tools Command Prompt 启动 VSCode，"
-                      "否则 cl.exe 不在 PATH 里，会报 'cl 不是内部或外部命令'。"
+            "detail": "调用 build.bat：先跑 vcvars64.bat 把 cl.exe 拉进 PATH，再手工补上本机 vcvars 漏掉的 Windows SDK 的 INCLUDE/LIB，最后 cl /Zi /EHsc /utf-8。这样在普通终端、普通 VSCode 里也能编译，不必从 x64 Native Tools Command Prompt 启动。"
+        },
+        {
+            "label": "run: 运行 hello.exe（命令行）",
+            "type": "shell",
+            "command": "${workspaceFolder}\\hello.exe",
+            "args": [
+                "7"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "problemMatcher": [],
+            "detail": "等价于在终端里敲 hello.exe 7。题目要求用命令行跑程序，所以这一步最好自己在集成终端里手敲一遍再截图。"
         },
         {
             "label": "python: 运行 hello.py",
             "type": "shell",
             "command": "python",
             "args": [
-                "${workspaceFolder}/hello.py"
+                "${workspaceFolder}\\hello.py"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

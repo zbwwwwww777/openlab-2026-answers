@@ -5,19 +5,22 @@
             "name": "C/C++: 用 MSVC 调试 hello.exe",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/hello.exe",
-            "args": [],
+            "program": "${workspaceFolder}\\hello.exe",
+            "args": [
+                "7"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "console": "integratedTerminal",
-            "preLaunchTask": "cl: 编译 hello.c（带调试信息）"
+            "preLaunchTask": "build: 编译 hello.c（MSVC，带调试信息）",
+            "detail": "F5 启动：会先自动编译，再停在 hello.c 里打的断点上。断点建议打在 factorial() 的 result *= i; 那一行，然后按 F10 单步，看左侧「变量」面板里 result 怎么从 1 变成 5040。"
         },
         {
             "name": "Python: 调试 hello.py",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/hello.py",
+            "program": "${workspaceFolder}\\hello.py",
             "args": [],
             "console": "integratedTerminal",
             "justMyCode": true
