@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cl: 编译 hello.c（带调试信息）",
+            "type": "shell",
+            "command": "cl",
+            "args": [
+                "/Zi",
+                "/EHsc",
+                "/Fe:hello.exe",
+                "hello.c"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "detail": "用 MSVC 的 cl.exe 编译。必须从 x64 Native Tools Command Prompt 启动 VSCode，"
+                      "否则 cl.exe 不在 PATH 里，会报 'cl 不是内部或外部命令'。"
+        },
+        {
+            "label": "python: 运行 hello.py",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "${workspaceFolder}/hello.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "problemMatcher": []
+        }
+    ]
+}
