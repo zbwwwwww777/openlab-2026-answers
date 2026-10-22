@@ -10,7 +10,9 @@ from __future__ import annotations
 from typing import Dict
 
 from PySide6.QtCore import QPointF, QRectF, Qt
-from PySide6.QtGui import QBrush, QColor, QFont, QPainter, QPen, QPolygonF
+from PySide6.QtGui import (
+    QBrush, QColor, QFont, QFontMetrics, QPainter, QPen, QPolygonF,
+)
 
 # 三套配色：主体色 / 深色（耳朵、尾巴尖）/ 腮红 / 描边
 THEMES: Dict[str, Dict[str, str]] = {
@@ -184,9 +186,15 @@ class CatSprite:
         line_height = 16
         pad = 8
         width = max(p.fontMetrics().horizontalAdvance(s) for s in lines) + pad * 2
+        if mood:
+            # 心情行用 7pt 小字单独量宽，避免比正文行宽而被截断
+            small_fm = QFontMetrics(QFont("", 7))
+            width = max(width, small_fm.horizontalAdvance("心情：" + mood) + pad * 2)
         height = line_height * len(lines) + pad * 2 + (14 if mood else 0)
 
-        x = self.W - 4.0
+        # 气泡右对齐到窗口右缘（而不是从右缘向右画，否则整段画出窗口外）
+        x = self.W - 4.0 - width
+        x = max(4.0, x)
         y = 2.0
         rect = QRectF(x, y, width, height)
 
