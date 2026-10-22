@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 虚拟环境与工具链
+# 注意：这里刻意【不】忽略 .vscode——src/q6_env/.vscode/ 里的
+# tasks.json / launch.json 是第 6 题的答题内容，必须提交。
+.idea/
+*.swp
+
+# 构建产物与大文件（仓库应保持在 10MB 以下）
+build/
+dist/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+
+# 第 3 题：llama.cpp 源码与大体积模型，绝对不能进仓库
+llama.cpp/
+*.gguf
+*.bin
+models/
+
+# 但 res/q3_evidence/ 下的编译/运行证据要交，需要放行
+!res/q3_evidence/
+
+# 第 6 题：Rust 构建产物与内核镜像
+target/
+*.img
+*.elf
+rCore-Tutorial*/
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 存档与日志（包含个人信息，不上传）
+state.json
+*.log
