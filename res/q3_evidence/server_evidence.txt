@@ -1,0 +1,15 @@
+Q3 加分项：llama-server + HTTP 接口调用
+命令 : llama-server.exe -m gemma-4-E2B-it-Q4_0.gguf --port 8080 -ngl 0
+请求 : POST http://127.0.0.1:8080/v1/chat/completions
+
+HTTP 状态 : 200
+耗时      : 20.6 s
+usage     : {'completion_tokens': 410, 'prompt_tokens': 26, 'total_tokens': 436, 'prompt_tokens_details': {'cached_tokens': 0}}
+
+返回内容：
+**Git 是一个强大的分布式版本控制系统，它通过记录项目代码的每一次修改历史，让开发者能够追踪文件的变动、管理不同版本，并与其他协作者高效协作。**
+
+服务端计时（来自 llama-server 自己的输出）：
+0.25.790.184 I slot print_timing: id  0 | task 0 | prompt eval time =     319.07 ms /    26 tokens (   12.27 ms per token,    81.49 tokens per second)
+0.25.790.190 I slot print_timing: id  0 | task 0 |        eval time =   20208.74 ms /   410 tokens (   49.41 ms per token,    20.24 tokens per second)
+0.25.790.191 I slot print_timing: id  0 | task 0 |       total time =   20527.81 ms /   436 tokens
